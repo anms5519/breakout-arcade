@@ -5,13 +5,94 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f0f0f0;
+    background-color: #e0e0e0;
 }
 
 canvas {
-    border: 1px solid #000;
+    border: 2px solid #000;
 }
 
 #gameCanvas {
-    background-color: #fff;
+    background-color: #fafafa;
+}
+
+#gameInfo {
+    display: flex;
+    justify-content: space-between;
+    width: 800px;
+    margin-bottom: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    color: #333;
+}
+
+#messages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 800px;
+    height: 50px;
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+    color: #333;
+}
+
+#gameOver, #levelComplete {
+    display: none;
+}
+
+#level, #score {
+    font-size: 20px;
+    color: #0095DD;
+}
+
+#gameOver {
+    color: red;
+}
+
+#levelComplete {
+    color: green;
+}
+
+canvas {
+    border: 2px solid #0095DD;
+    background-color: #f0f0f0;
+}
+
+/* Pde15 */
+#powerUps {
+    font-size: 20px;
+    color: #0095DD;
+    margin-top: 10px;
+}
+
+/* P619c */
+@keyframes paddleAnimation {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(10px); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes ballAnimation {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes brickAnimation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+#paddle {
+    animation: paddleAnimation 0.5s infinite;
+}
+
+#ball {
+    animation: ballAnimation 0.5s infinite;
+}
+
+.brick {
+    animation: brickAnimation 1s infinite;
 }

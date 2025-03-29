@@ -27,6 +27,11 @@ const brickPadding = 10;
 const brickOffsetTop = 30;
 const brickOffsetLeft = 30;
 
+let level = 1;
+let score = 0;
+let lives = 3;
+let powerUps = [];
+
 for (let c = 0; c < brickColumnCount; c++) {
     bricks[c] = [];
     for (let r = 0; r < brickRowCount; r++) {
@@ -99,10 +104,34 @@ function moveBall() {
                 if (ball.x > b.x && ball.x < b.x + brickWidth && ball.y > b.y && ball.y < b.y + brickHeight) {
                     ball.dy *= -1;
                     b.status = 0;
+                    score += 10;
+                    if (score === brickRowCount * brickColumnCount * 10) {
+                        levelComplete();
+                    }
                 }
             }
         }
     }
+
+    if (ball.y + ball.radius > canvas.height) {
+        lives--;
+        if (!lives) {
+            gameOver();
+        } else {
+            resetBallAndPaddle();
+        }
+    }
+
+    // Power-ups logic
+    powerUps.forEach((powerUp, index) => {
+        powerUp.y += powerUp.dy;
+        if (powerUp.y + powerUp.height > canvas.height) {
+            powerUps.splice(index, 1);
+        } else if (powerUp.y + powerUp.height > paddle.y && powerUp.x > paddle.x && powerUp.x < paddle.x + paddle.width) {
+            applyPowerUp(powerUp.type);
+            powerUps.splice(index, 1);
+        }
+    });
 }
 
 function draw() {
@@ -112,7 +141,99 @@ function draw() {
     drawBricks();
     movePaddle();
     moveBall();
+    drawScore();
+    drawLevel();
+    drawPowerUps();
     requestAnimationFrame(draw);
+}
+
+function drawScore() {
+    ctx.font = '16px Arial';
+    ctx.fillStyle = '#0095DD';
+    ctx.fillText('Score: ' + score, 8, 20);
+}
+
+function drawLevel() {
+    ctx.font = '16px Arial';
+    ctx.fillStyle = '#0095DD';
+    ctx.fillText('Level: ' + level, canvas.width - 65, 20);
+}
+
+function drawPowerUps() {
+    powerUps.forEach(powerUp => {
+        ctx.beginPath();
+        ctx.rect(powerUp.x, powerUp.y, powerUp.width, powerUp.height);
+        ctx.fillStyle = powerUp.color;
+        ctx.fill();
+        ctx.closePath();
+    });
+}
+
+function levelComplete() {
+    level++;
+    resetBricks();
+    resetBallAndPaddle();
+    document.getElementById('levelComplete').style.display = 'block';
+    setTimeout(() => {
+        document.getElementById('levelComplete').style.display = 'none';
+        draw();
+    }, 2000);
+}
+
+function gameOver() {
+    document.getElementById('gameOver').style.display = 'block';
+    setTimeout(() => {
+        document.getElementById('gameOver').style.display = 'none';
+        document.location.reload();
+    }, 2000);
+}
+
+function resetBricks() {
+    for (let c = 0; c < brickColumnCount; c++) {
+        for (let r = 0; r < brickRowCount; r++) {
+            bricks[c][r].status = 1;
+        }
+    }
+}
+
+function resetBallAndPaddle() {
+    ball.x = canvas.width / 2;
+    ball.y = canvas.height / 2;
+    ball.dx = 4;
+    ball.dy = -4;
+    paddle.x = canvas.width / 2 - paddle.width / 2;
+}
+
+function applyPowerUp(type) {
+    switch (type) {
+        case 'expandPaddle':
+            paddle.width *= 1.5;
+            setTimeout(() => {
+                paddle.width /= 1.5;
+            }, 10000);
+            break;
+        case 'shrinkPaddle':
+            paddle.width /= 1.5;
+            setTimeout(() => {
+                paddle.width *= 1.5;
+            }, 10000);
+            break;
+        case 'extraLife':
+            lives++;
+            break;
+        case 'slowBall':
+            ball.speed /= 1.5;
+            setTimeout(() => {
+                ball.speed *= 1.5;
+            }, 10000);
+            break;
+        case 'fastBall':
+            ball.speed *= 1.5;
+            setTimeout(() => {
+                ball.speed /= 1.5;
+            }, 10000);
+            break;
+    }
 }
 
 document.addEventListener('keydown', keyDownHandler);

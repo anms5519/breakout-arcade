@@ -3,11 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Breakout Arcade</title>
+    <title>Breakout Arcade by ANMS</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div id="gameInfo">
+        <div id="level">Level: 1</div>
+        <div id="score">Score: 0</div>
+    </div>
     <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <div id="messages">
+        <div id="gameOver" style="display: none;">Game Over</div>
+        <div id="levelComplete" style="display: none;">Level Complete</div>
+    </div>
+    <div id="powerUps">Power-Ups: None</div>
     <script src="index.js"></script>
 </body>
 </html>
