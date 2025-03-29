@@ -258,4 +258,18 @@ function keyUpHandler(e) {
     }
 }
 
+// Touch controls for mobile devices
+document.getElementById('leftButton').addEventListener('touchstart', () => {
+    leftPressed = true;
+});
+document.getElementById('leftButton').addEventListener('touchend', () => {
+    leftPressed = false;
+});
+document.getElementById('rightButton').addEventListener('touchstart', () => {
+    rightPressed = true;
+});
+document.getElementById('rightButton').addEventListener('touchend', () => {
+    rightPressed = false;
+});
+
 draw();

@@ -96,3 +96,26 @@ canvas {
 .brick {
     animation: brickAnimation 1s infinite;
 }
+
+/* Pa015 */
+#touchControls {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+#touchControls button {
+    width: 100px;
+    height: 50px;
+    font-size: 18px;
+    margin: 0 10px;
+    background-color: #0095DD;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#touchControls button:active {
+    background-color: #0077b3;
+}
