@@ -59,14 +59,12 @@ canvas {
     background-color: #f0f0f0;
 }
 
-/* Pde15 */
 #powerUps {
     font-size: 20px;
     color: #0095DD;
     margin-top: 10px;
 }
 
-/* P619c */
 @keyframes paddleAnimation {
     0% { transform: translateX(0); }
     50% { transform: translateX(10px); }
@@ -97,7 +95,6 @@ canvas {
     animation: brickAnimation 1s infinite;
 }
 
-/* Pa015 */
 #touchControls {
     display: flex;
     justify-content: center;
